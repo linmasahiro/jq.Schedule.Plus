@@ -30,6 +30,7 @@
             clickToAdd: true, // SEBASIRA #2 This enables/disables the click on timeline to add new item
             draggable: false, // SEBASIRA #3 Toggle draggable
             resizable: false, // SEBASIRA #7 Toggle resizable
+            fullOpacity: false, // SEBASIRA #8 Override EventCard opacity
             // event
             initData: null,
             change: null,
@@ -220,7 +221,14 @@
 
                 // ブロック内容の追加
                 var $content = jQuery('<span class="head"><span class="startTime time"></span>～<span class="endTime time"></span></span><span class="text"></span>');
-                var $bar = jQuery('<div class="sc_Bar ' + data['class'] + '"></div>').append($deleteBtn).append($content);
+
+                // SEBASIRA #8 Full opacity override
+                var fullOpacityClass = "";
+                if (setting.fullOpacity){
+                    fullOpacityClass = "full-opacity";
+                }
+
+                var $bar = jQuery('<div class="sc_Bar ' + data['class'] + ' ' + fullOpacityClass +'"></div>').append($deleteBtn).append($content);
                 var stext = startDate + ' ' + element.formatTime(data["start"]);
                 var etext = endDate + ' ' + element.formatTime(data["end"]);
                 var snum = element.getScheduleCount(data["timeline"]);

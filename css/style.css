@@ -171,3 +171,7 @@
 #schedule .newAdd {
 	background-color: #108000 !important;
 }
+
+.full-opacity {
+	opacity: 1 !important;
+}
