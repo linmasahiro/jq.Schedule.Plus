@@ -26,7 +26,8 @@
             headTimeBorder: 1, // time border width
             dataWidth: 160, // data width
             verticalScrollbar: 0, // vertical scrollbar width
-            multiple: false, // LIN 追加機能-複数選択機能有無
+            multiple: false, // LIN 追加機能-複数選択機能有無 If true I can add more than one event by clicking
+            clickToAdd: true, // This enables/disables the click on timeline to add new item
             // event
             initData: null,
             change: null,
@@ -485,26 +486,28 @@
                 var $startElement;
                 var $endElement;
                 $timeline.find(".tl").bind("mousedown", function (event) {
-                    if (!setting.multiple && liveDataNo.length > 0) {
-                        console.log('not support multiple!');
-                        return false;
-                    }
-                    $startElement = jQuery(this);
-                    if ($startElement.hasClass('can_res')) {
-                        $endElement = undefined;
-                        if (!$startElement.hasClass('selected_time')) {
-                            $startElement.toggleClass('time_first', true);
-                            $startElement.toggleClass('selected_no_' + addNo, true);
-                            lineId = $startElement.data('lineId');
-                            startX = event.pageX;
-                            if (!setting.multiple) {
-                                jQuery('.selected_time').toggleClass('selected_time', false);
-                            }
-                            isMouseDown = true;
-                            $startElement.toggleClass("selected_time", true);
-                            if (setting.multiple) {
-                                $startElement.html('');
-                                $startElement.append($('<div>' + addNo + '</div>'));
+                    if (setting.clickToAdd){
+                        if (!setting.multiple && liveDataNo.length > 0) {
+                            console.log('not support multiple!');
+                            return false;
+                        }
+                        $startElement = jQuery(this);
+                        if ($startElement.hasClass('can_res')) {
+                            $endElement = undefined;
+                            if (!$startElement.hasClass('selected_time')) {
+                                $startElement.toggleClass('time_first', true);
+                                $startElement.toggleClass('selected_no_' + addNo, true);
+                                lineId = $startElement.data('lineId');
+                                startX = event.pageX;
+                                if (!setting.multiple) {
+                                    jQuery('.selected_time').toggleClass('selected_time', false);
+                                }
+                                isMouseDown = true;
+                                $startElement.toggleClass("selected_time", true);
+                                if (setting.multiple) {
+                                    $startElement.html('');
+                                    $startElement.append($('<div>' + addNo + '</div>'));
+                                }
                             }
                         }
                     }
