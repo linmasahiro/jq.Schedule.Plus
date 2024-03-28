@@ -31,6 +31,7 @@
             draggable: false, // SEBASIRA #3 Toggle draggable
             resizable: false, // SEBASIRA #7 Toggle resizable
             fullOpacity: false, // SEBASIRA #8 Override EventCard opacity
+            allowDelete: true, // SEBASIRA #9 Toggle delettability
             // event
             initData: null,
             change: null,
@@ -197,27 +198,32 @@
                 var et = Math.ceil((data["end"] - tableStartTime) / setting.widthTime) + endMultiples;
 
                 // 削除ボタンの追加
-                var $deleteBtn = jQuery('<span style="float: right; padding: 5px">✖</span>');
-                $deleteBtn.click(function () {
-                    // LIN 削除した列の高さを調整する
-                    var sc_key = $bar.data("sc_key");
-                    var deleteTimelineNum = scheduleData[sc_key].timeline;
-                    var tempDeleteData = scheduleData[sc_key];
-                    $bar.remove();
-                    element.resetBarPosition(deleteTimelineNum);
+                // SEBASIRA #9 Toggle Deeletable
+                var $deleteBtn = "";
+                if (setting.allowDelete){
+                    $deleteBtn = jQuery('<span style="float: right; padding: 5px; cursor: pointer">✖</span>');
+            
+                    $deleteBtn.click(function () {
+                        // LIN 削除した列の高さを調整する
+                        var sc_key = $bar.data("sc_key");
+                        var deleteTimelineNum = scheduleData[sc_key].timeline;
+                        var tempDeleteData = scheduleData[sc_key];
+                        $bar.remove();
+                        element.resetBarPosition(deleteTimelineNum);
 
-                    // LIN 追加したエレメントの削除は追加番号を削除する
-                    if (tempDeleteData['data']['No'] !== undefined) {
-                        var key = jQuery.inArray(tempDeleteData['data']['No'], liveDataNo);
-                        liveDataNo.splice(key, 1);
-                    }
-
-                    if (setting.delete) {
-                        if (jQuery(this).data("dragCheck") !== true && jQuery(this).data("resizeCheck") !== true) {
-                            setting.delete(tempDeleteData);
+                        // LIN 追加したエレメントの削除は追加番号を削除する
+                        if (tempDeleteData['data']['No'] !== undefined) {
+                            var key = jQuery.inArray(tempDeleteData['data']['No'], liveDataNo);
+                            liveDataNo.splice(key, 1);
                         }
-                    }
-                });
+
+                        if (setting.delete) {
+                            if (jQuery(this).data("dragCheck") !== true && jQuery(this).data("resizeCheck") !== true) {
+                                setting.delete(tempDeleteData);
+                            }
+                        }
+                    });
+                }
 
                 // ブロック内容の追加
                 var $content = jQuery('<span class="head"><span class="startTime time"></span>～<span class="endTime time"></span></span><span class="text"></span>');
