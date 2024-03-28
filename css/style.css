@@ -106,8 +106,16 @@
 	overflow:hidden;
 }
 #schedule .sc_data .timeline span{
-	padding:10px;
+	padding-left:10px;
 	display:block;
+}
+
+#schedule .sc_data .timeline span.timeline-title {
+	padding-top:10px;
+}
+#schedule .sc_data .timeline span.timeline-subtitle {
+	font-size: 0.8em;
+	color: #cccccc;
 }
 #schedule .sc_data .timeline span.photo{
 	float:left;

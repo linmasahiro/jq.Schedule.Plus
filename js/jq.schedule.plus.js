@@ -428,7 +428,7 @@
             var html;
 
             var $data = jQuery('<div class="timeline">');
-            var $title_span = jQuery('<span class="title_' + lineId + '" data-id="' + lineId + '">' + title + '</span>').appendTo($data);
+            var $title_span = jQuery('<span class="timeline-title title_' + lineId + '" data-id="' + lineId + '">' + title + '</span>').appendTo($data);
             if (setting.titleClick) {
                 $title_span.css('cursor', 'pointer');
                 $title_span.click(function () {
@@ -436,6 +436,12 @@
                         timeline: $(this).data('id')
                     });
                 });
+            }
+
+            // SEBASIRA #5 - Subtitle
+            if (row.subtitle) {
+                var subtitle = this.unescapeHtml(row["subtitle"]);
+                $data.append('<span class="timeline-subtitle">' + row.subtitle + '</span>');
             }
 
             // event call

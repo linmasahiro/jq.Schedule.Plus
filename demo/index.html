@@ -313,8 +313,10 @@
             <p>Add multiple Support</p>
             <p>Time width adjust Schedule Support</p>
             <p>Weekday schedule Support</p>
-            <p>Business hours Support</p>
+            <p><strong>Business hours Support (fixed)</strong></p>
             <p>Delete schedule Support</p>
+            <p><strong>Toggle click to add event Support</strong></p>
+            <p><strong>Drag and Drop Support (re-added from original)</strong></p>
             <p><button onclick="javascript:location.href='https://github.com/linmasahiro/jq.Schedule.Plus';"
                     class="btn btn-large btn-primary" type="button">Download jq.Schedule.Plus</button></p>
             <p>
@@ -380,28 +382,33 @@
             <table class="table table-striped">
                 <tr>
                     <th colspan="2">name</th>
-                    <th width="200">Type</th>
+                    <th>Type</th>
                     <th>description</th>
+                </tr>
+                <tr>
+                    <td colspan="2">today</td>
+                    <td>String(YYYY/MM/DD)</td>
+                    <td>Combined with <strong>nowTime</strong> all dates in the timeline before today@nowTime will be greyed-out (disabled) by default.</td>
                 </tr>
                 <tr>
                     <td colspan="2">nowTime</td>
                     <td>String(HH:ii)</td>
-                    <td>schedule now time</td>
+                    <td>See <strong>today</strong> for reference</td>
                 </tr>
                 <tr>
                     <td colspan="2">startDate</td>
                     <td>String(YYYY/MM/DD)</td>
-                    <td>schedule start date</td>
+                    <td>First date of the schedule</td>
                 </tr>
                 <tr>
                     <td colspan="2">endDate</td>
                     <td>String(YYYY/MM/DD)</td>
-                    <td>schedule end date</td>
+                    <td>Last date of the schedule</td>
                 </tr>
                 <tr>
                     <td colspan="2">weekday</td>
                     <td>Array</td>
-                    <td>Date weekday</td>
+                    <td>Defines the name to be shown on hedaer bar for each DoW starting from sunday</td>
                 </tr>
                 <tr>
                     <td colspan="2">startTime</td>
@@ -447,7 +454,17 @@
                 <tr>
                     <td colspan="2">multiple</td>
                     <td>Boolean</td>
-                    <td>can multiple add to schedule</td>
+                    <td>Allows the user to add more than one event by clicking on the timeline</td>
+                </tr>
+                <tr>
+                    <td colspan="2">clickToAdd</td>
+                    <td>Boolean</td>
+                    <td>Allows the user to add events by clicking on the timeline</td>
+                </tr>
+                <tr>
+                    <td colspan="2">draggable</td>
+                    <td>Boolean</td>
+                    <td>Allows drag/drop events in the timeline</td>
                 </tr>
                 <tr>
                     <td rowspan="5">rows</td>
@@ -523,7 +540,7 @@
             <table class="table table-striped">
                 <tr>
                     <th>name</th>
-                    <th width="80">Type</th>
+                    <th>Type</th>
                     <th>description</th>
                 </tr>
                 <tr>
@@ -549,7 +566,7 @@
             <table class="table table-striped">
                 <tr>
                     <th colspan="2">name</th>
-                    <th width="80">Type</th>
+                    <th>Type</th>
                     <th>description</th>
                 </tr>
                 <tr>
@@ -564,7 +581,8 @@
                 </tr>
                 <tr>
                     <td rowspan="5">schedule</td>
-                    <td colspan="2">array</td>
+                    <td></td>
+                    <td>array</td>
                     <td>add schedule data</td>
                 </tr>
                 <tr>
