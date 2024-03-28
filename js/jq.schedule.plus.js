@@ -28,6 +28,7 @@
             verticalScrollbar: 0, // vertical scrollbar width
             multiple: false, // LIN 追加機能-複数選択機能有無 If true I can add more than one event by clicking
             clickToAdd: true, // This enables/disables the click on timeline to add new item
+            draggable: true,
             // event
             initData: null,
             change: null,
@@ -388,6 +389,10 @@
                         }
                     }
                 });
+
+                if (setting.draggable === false) {
+                    $bar.draggable('disable');
+                }
 
                 return key;
             }
