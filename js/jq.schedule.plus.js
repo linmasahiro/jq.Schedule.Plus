@@ -29,6 +29,7 @@
             multiple: false, // LIN 追加機能-複数選択機能有無 If true I can add more than one event by clicking
             clickToAdd: true, // SEBASIRA #2 This enables/disables the click on timeline to add new item
             draggable: false, // SEBASIRA #3 Toggle draggable
+            resizable: false, // SEBASIRA #7 Toggle resizable
             // event
             initData: null,
             change: null,
@@ -393,6 +394,11 @@
                 // SEBASIRA #3 Toggle draggable
                 if (setting.draggable === false) {
                     $bar.draggable('disable');
+                }
+
+                // SEBASIRA #7 Toggle resizable
+                if (setting.resizable === false) {
+                    $bar.resizable('disable');
                 }
 
                 return key;

@@ -316,7 +316,9 @@
             <p><strong>Business hours Support (fixed)</strong></p>
             <p>Delete schedule Support</p>
             <p><strong>Toggle click to add event Support</strong></p>
-            <p><strong>Drag and Drop Support (re-added from original)</strong></p>
+            <p><strong>Toggle Drag and Drop Support (re-added from original)</strong></p>
+            <p><strong>Toggle Resize Support (re-added from original)</strong></p>
+            <p><strong>Row Subtitle (re-added from original)</strong></p>
             <p><button onclick="javascript:location.href='https://github.com/linmasahiro/jq.Schedule.Plus';"
                     class="btn btn-large btn-primary" type="button">Download jq.Schedule.Plus</button></p>
             <p>
@@ -466,31 +468,42 @@
                     <td>Boolean</td>
                     <td>Allows drag/drop events in the timeline</td>
                 </tr>
+
                 <tr>
-                    <td rowspan="5">rows</td>
+                    <td colspan="2">resizable</td>
+                    <td>Boolean</td>
+                    <td>Allows to resize an event in the timeline</td>
+                </tr>
+                <tr>
+                    <td rowspan="6">rows</td>
                     <td></td>
                     <td>Array</td>
-                    <td>Schedule Data</td>
+                    <td>Row Data. Each row is a timeline with a given resource name (title)</td>
                 </tr>
                 <tr>
                     <td>title</td>
                     <td>String</td>
-                    <td>Schedule Left Cell Text</td>
+                    <td>Title of the resource in the timeline</td>
+                </tr>
+                <tr>
+                    <td>subtitle</td>
+                    <td>String</td>
+                    <td>Optional subtitle to add below the resource name</td>
                 </tr>
                 <tr>
                     <td>impossibleDate</td>
-                    <td>Array</td>
-                    <td>Can't reserve date</td>
+                    <td>Array(YYYY/MM/DD)</td>
+                    <td>Impossible dates are greyed-out and disabled</td>
                 </tr>
                 <tr>
                     <td>businessHours</td>
                     <td>Array</td>
-                    <td>Schedule businessHours</td>
+                    <td>Must have 7 elements, one per each DoW. It defines the open/close time of each, starting from sunday</td>
                 </tr>
                 <tr>
                     <td>schedule</td>
                     <td>Array</td>
-                    <td>Schedule Cell Data</td>
+                    <td>Events to add to the row (timeline)</td>
                 </tr>
                 <tr>
                     <td colspan="2">change</td>
@@ -536,6 +549,7 @@
         </p>
 
         <h2 id="option">Business Hours</h2>
+        <p>Each row <strong>must have 7 elements</strong>, one per each Day of the Week. It defines the open/close time of each one, starting from sunday. The date in the timeline would be greyed-out in the interval outside the start-end for the given DoW</p>
         <p>
             <table class="table table-striped">
                 <tr>
@@ -544,24 +558,20 @@
                     <th>description</th>
                 </tr>
                 <tr>
-                    <td>dow</td>
-                    <td>Array</td>
-                    <td>Day of week</td>
-                </tr>
-                <tr>
                     <td>start</td>
-                    <td>String</td>
-                    <td>time String(HH:ii)</td>
+                    <td>String(HH:ii)</td>
+                    <td>Resource open time</td>
                 </tr>
                 <tr>
                     <td>end</td>
-                    <td>String</td>
-                    <td>time String(HH:ii)</td>
+                    <td>String(HH:ii)</td>
+                    <td>Resource close time</td>
                 </tr>
             </table>
         </p>
 
         <h2 id="option">Schedule Data</h2>
+        <p>I like to call this <strong>Event Data</strong> because it defines the data of the scheduled events in the given timeline (row). Take into account that in the original version, the <strong>start</strong> and <strong>end</strong> were defined as TIME, but in this plus version, as the timeline can display multiple dates, each <strong>start/end</strong> are DATE-TIME</p>
         <p>
             <table class="table table-striped">
                 <tr>
@@ -570,40 +580,35 @@
                     <th>description</th>
                 </tr>
                 <tr>
-                    <td colspan="2">title</td>
-                    <td>String</td>
-                    <td>Visible Text Schedule Bar</td>
+                    <td colspan="2">start</td>
+                    <td>String (YYYY/MM/DD HH:ii)</td>
+                    <td>DateTime when this event starts</td>
                 </tr>
                 <tr>
-                    <td colspan="2">class</td>
-                    <td>String</td>
-                    <td>add class name</td>
+                    <td colspan="2">end</td>
+                    <td>String (YYYY/MM/DD HH:ii)</td>
+                    <td>DateTime when this event ends</td>
                 </tr>
                 <tr>
-                    <td rowspan="5">schedule</td>
+                    <td colspan="2">text</td>
+                    <td>String</td>
+                    <td>Visible Text of the Event</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td>String</td>
+                    <td>Class to add to the event card (note this was inside <em>data</em> in the original version</td>
+                </tr>
+                <tr>
+                    <td rowspan="5">data</td>
                     <td></td>
-                    <td>array</td>
-                    <td>add schedule data</td>
+                    <td>Object</td>
+                    <td>Addiitonal data of the event. Can add custom attributes, but has special ones, as shown below</td>
                 </tr>
                 <tr>
-                    <td>start</td>
+                    <td><em>image?</em></td>
                     <td>String</td>
-                    <td>time String(HH:ii)</td>
-                </tr>
-                <tr>
-                    <td>end</td>
-                    <td>String</td>
-                    <td>time String(HH:ii)</td>
-                </tr>
-                <tr>
-                    <td>text</td>
-                    <td>String</td>
-                    <td>Show Text</td>
-                </tr>
-                <tr>
-                    <td>data</td>
-                    <td>Object,Array</td>
-                    <td>callback data Object</td>
+                    <td>URL of an image to be shown on Event card (this was un-docummented in the original, I've not test it in the plus version)</td>
                 </tr>
             </table>
         </p>
@@ -616,6 +621,8 @@
                 inc. All Rights Reserved.</p>
             <p class="muted credit">Plus Version : Copyright © 2019 <a href="https://github.com/linmasahiro"
                     target="_blank">Lin</a> All Rights Reserved.</p>
+             <p class="muted credit">++ Version : Copyright © 2024 <a href="https://github.com/sebasira"
+                    target="_blank">Sebasira</a> All Rights Reserved.</p>
         </div>
     </div>
 </body>
