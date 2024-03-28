@@ -27,8 +27,8 @@
             dataWidth: 160, // data width
             verticalScrollbar: 0, // vertical scrollbar width
             multiple: false, // LIN 追加機能-複数選択機能有無 If true I can add more than one event by clicking
-            clickToAdd: true, // This enables/disables the click on timeline to add new item
-            draggable: true,
+            clickToAdd: true, // SEBASIRA #2 This enables/disables the click on timeline to add new item
+            draggable: false, // SEBASIRA #3 Toggle draggable
             // event
             initData: null,
             change: null,
@@ -390,6 +390,7 @@
                     }
                 });
 
+                // SEBASIRA #3 Toggle draggable
                 if (setting.draggable === false) {
                     $bar.draggable('disable');
                 }
@@ -448,7 +449,7 @@
             var $timeline = jQuery(html);
             var impossibleDate = (row["impossibleDate"] !== undefined && row["impossibleDate"] !== null) ? row["impossibleDate"] : [];
             for (var count = 0; count < diffDays; count++) {
-                var dayOfWeek = (count == 6) ? 0 : (count + 1);
+                var dayOfWeek = new Date(daysArray[count]).getDay(); // SEBASIRA #4 get the DoW of each date being displayed
                 var businessStartTime = element.calcStringTime(row["businessHours"][dayOfWeek]['start']);
                 var businessEndTime = element.calcStringTime(row["businessHours"][dayOfWeek]['end']);
                 for (var t = tableStartTime; t < tableEndTime; t += setting.widthTime) {
@@ -491,6 +492,7 @@
                 var $startElement;
                 var $endElement;
                 $timeline.find(".tl").bind("mousedown", function (event) {
+                    // SEBASIRA #2 Toggle clickToAdd
                     if (setting.clickToAdd){
                         if (!setting.multiple && liveDataNo.length > 0) {
                             console.log('not support multiple!');
