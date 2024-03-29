@@ -302,10 +302,12 @@
                     <ul class="nav">
                         <li class="active"><a href="#home">Home</a></li>
                         <li><a href="#demo">Demo</a></li>
-                        <li><a href="#info">Get Start</a></li>
+                        <li><a href="#info">Get Started</a></li>
                         <li><a href="#option">Option</a></li>
                         <li><a href="https://github.com/ateliee/jquery.schedule/" target="_blank">Orignal
                                 jq.Schedule</a></li>
+                        <li><a href="https://github.com/linmasahiro/jq.Schedule.Plus" target="_blank">Orignal
+                                jq.Schedule.Plus</a></li>
                     </ul>
                 </div>
                 <!--/.nav-collapse -->
@@ -341,11 +343,20 @@
             <p><strong>Row Subtitle (re-added from original)</strong></p>
             <p><strong>Custom EventCard content Support</strong></p>
             <p><button onclick="javascript:location.href='https://github.com/linmasahiro/jq.Schedule.Plus';"
-                    class="btn btn-large btn-primary" type="button">Download jq.Schedule.Plus</button></p>
+                    class="btn btn-large btn-primary" type="button">Download jq.Schedule.Plus v1</button></p>
             <p>
                 <iframe src="http://ghbtns.com/github-btn.html?user=linmasahiro&repo=jquery.schedule.plus&type=watch&count=true"
                     allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
             </p>
+
+            <p><button onclick="javascript:location.href='https://github.com/sebasira/jquery.schedule.plus';"
+                    class="btn btn-large btn-success" type="button">Download jq.Schedule.Plus v2.1</button></p>
+
+            <p>
+                <iframe src="http://ghbtns.com/github-btn.html?user=sebasira&repo=jquery.schedule.plus&type=watch&count=true"
+                    allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+            </p>
+            
         </div>
         <h2 id="demo">Demo</h2>
         <p>
@@ -377,26 +388,28 @@
                         </pre>
             </div>
         </div>
-        <h2 id="info">Get Start</h2>
+        <h2 id="info">Get Started</h2>
         <ol>
             <li>
                 <p>Please Download <a
-                        href="https://github.com/linmasahiro/jquery.schedule.plus/archive/master.zip">jQuery.Schedule.Plus</a></p>
+                        href="https://github.com/sebasira/jquery.schedule.plus/archive/refs/tags/v2.1.zip">jQuery.Schedule.Plus v2.1</a></p>
             </li>
             <li>
-                <p>include <code>jquery.js</code>and<code>jquery.ui.js</code> after jq.schedule</p>
+                <p>include <code>jquery.js</code>and<code>jquery.ui.js</code> after <code>jq.schedule.plus</code></p>
                 <pre><code>&lt;script src=&quot;jquery-1.10.2.js&quot; type=&quot;text/javascript&quot; language=&quot;javascript&quot;&gt;&lt;/script&gt;
-            &lt;script src=&quot;jquery-ui-1.10.4.js&quot; type=&quot;text/javascript&quot; language=&quot;javascript&quot;&gt;&lt;/script&gt;
-            &lt;script type=&quot;text/javascript&quot; src=&quot;../js/jq.schedule.plus.js&quot;&gt;&lt;/script&gt;
-            &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../css/style.css&quot; /&gt;</code></pre>
+&lt;script src=&quot;jquery-ui-1.10.4.js&quot; type=&quot;text/javascript&quot; language=&quot;javascript&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;../js/jq.schedule.plus.js&quot;&gt;&lt;/script&gt;
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../css/style.css&quot; /&gt;
+&lt;!-- If using Bootsrap (v3) and has issues with the appearean ce, please also include this --&gt
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../css/fix-bootstrap.css&quot; /&gt;</code></pre>
             </li>
             <li>
                 <p>init scripts</p>
                 <pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
-            jQuery(document).ready(function(){
-                var $sc = jQuery(&quot;#schedule&quot;).timeSchedule($options);
-            });
-            &lt;/script&gt;</code></pre>
+    jQuery(document).ready(function(){
+        var $sc = jQuery(&quot;#schedule&quot;).timeSchedule($options);
+    });
+&lt;/script&gt;</code></pre>
             </li>
         </ol>
 
@@ -643,7 +656,7 @@
                 <tr>
                     <td colspan="2">class</td>
                     <td>String</td>
-                    <td>Class to add to the event card (note this was inside <em>data</em> in the original version</td>
+                    <td>Class to add to the event card (note this was inside <em>data</em> in the original version)</td>
                 </tr>
                 <tr>
                     <td rowspan="5">data</td>
@@ -668,7 +681,7 @@
             <p class="muted credit">Plus Version : Copyright © 2019 <a href="https://github.com/linmasahiro"
                     target="_blank">Lin</a> All Rights Reserved.</p>
              <p class="muted credit">++ Version : Copyright © 2024 <a href="https://github.com/sebasira"
-                    target="_blank">Sebasira</a> All Rights Reserved.</p>
+                    target="_blank">sebasira</a> All Rights Reserved.</p>
         </div>
     </div>
 </body>
