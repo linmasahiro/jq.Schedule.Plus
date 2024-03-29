@@ -45,8 +45,9 @@
             timeClick: null,
             timeDrag: null,
             delete: null,
-            // custom functions
-            applyCustomContent: null
+            // custom content
+            applyCustomContent: null, // SEBASIRA #11 Defines a function to be called to display the cont
+            contentDefinition: "<span class='head'><span class='start time'></span>～<span class='end time'></span></span><span class='text'></span><span></span>'" // SEBASIRA #11 Allows to define a custom content strucutre, using the current one as default
         };
 
         this.calcStringTime = function (string) {
@@ -230,7 +231,7 @@
 
                 // ブロック内容の追加
                 // EVENT CARD CONTENT DEFINITION
-                var $content = jQuery('<span class="head"><span class="start time"></span>～<span class="end time"></span></span><span class="text"></span>');
+                var $content = jQuery(setting.contentDefinition);
 
                 // SEBASIRA #8 Full opacity override
                 var fullOpacityClass = "";

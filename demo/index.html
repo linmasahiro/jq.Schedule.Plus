@@ -280,8 +280,8 @@
      */
     function applyCustomContentToCard(element, cardElement, eventData){
         var stext = element.formatTime(eventData["start"]);
-
         cardElement.find(".start").text(stext);
+        
         if (eventData["text"]) {
             cardElement.find(".text").text("Observations: " + eventData["text"]);
         }
