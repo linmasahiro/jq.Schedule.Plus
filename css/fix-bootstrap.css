@@ -30,3 +30,11 @@
     -moz-box-sizing: content-box !important;
     box-sizing: content-box !important;
 }
+
+.sc_date,
+.sc_date::before,
+.sc_date::after{
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    box-sizing: content-box !important;
+}
