@@ -33,7 +33,9 @@
             resizable: false, // SEBASIRA #7 Toggle resizable
             fullOpacity: false, // SEBASIRA #8 Override EventCard opacity
             allowDelete: true, // SEBASIRA #9 Toggle delettability
-            // event
+            nextNo: 1, // LIN 追加機能 - 複数選択初期番号
+            debug: "", // debug selecter
+            // event handlers
             initData: null,
             change: null,
             dateClick: null,
@@ -43,8 +45,8 @@
             timeClick: null,
             timeDrag: null,
             delete: null,
-            nextNo: 1, // LIN 追加機能 - 複数選択初期番号
-            debug: "" // debug selecter
+            // custom functions
+            applyCustomContent: null
         };
 
         this.calcStringTime = function (string) {
@@ -237,15 +239,20 @@
                 }
 
                 var $bar = jQuery('<div class="sc_Bar ' + data['class'] + ' ' + fullOpacityClass +'"></div>').append($deleteBtn).append($content);
+
+                // APPLY DATA/INFO TO CONTENT
                 var stext = startDate + ' ' + element.formatTime(data["start"]);
                 var etext = endDate + ' ' + element.formatTime(data["end"]);
                 var snum = element.getScheduleCount(data["timeline"]);
-
-                // APPLY DATA/INFO TO CONTENT
                 $bar.find(".start").text(stext);
                 $bar.find(".end").text(etext);
                 if (data["text"]) {
                     $bar.find(".text").text(data["text"]);
+                }
+
+                // SEBASIRA #11 Apply custom content. This will call a method to apply custom content values
+                if (setting.applyCustomContent) {
+                    setting.applyCustomContent(element, $bar, data);
                 }
 
                 // EVENT CARD CONFIGURATION

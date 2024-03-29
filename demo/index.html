@@ -262,10 +262,30 @@
                 delete: function (data) {
                     // LIN 追加機能-削除イベント
                     $("#logs").append($("<div>").text("Delete event:" + JSON.stringify(data)));
+                },
+                applyCustomContent: function (element, cardElement, eventData) {
+                    // SEBASIRA #11 Custom Content
+                    applyCustomContentToCard(element, cardElement, eventData);
                 }
             });
         }
     })
+
+
+    /* APPLY CUSTOM CONTENT */
+    /* ******************** */
+    /**
+     * Example custom content definition that sets the START to be just the time, and leave the END as default (full DateTime).
+     * Also changes the text to pre-append 'Observations: ' to it, just ot showcase how content will be customized
+     */
+    function applyCustomContentToCard(element, cardElement, eventData){
+        var stext = element.formatTime(eventData["start"]);
+
+        cardElement.find(".start").text(stext);
+        if (eventData["text"]) {
+            cardElement.find(".text").text("Observations: " + eventData["text"]);
+        }
+    }
 </script>
 
 <body>
