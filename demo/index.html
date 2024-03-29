@@ -80,7 +80,7 @@
                         text: 'Mr.B reserved',
                         class: '',
                         start: '2019/05/19 06:00',
-                        end: '2019/05/19 12:00',
+                        end: '2019/05/22 12:00',
                         data: {
                             something: 'something'
                         }
@@ -314,7 +314,7 @@
             <p>Time width adjust Schedule Support</p>
             <p>Weekday schedule Support</p>
             <p><strong>Business hours Support (fixed)</strong></p>
-            <p>Delete schedule Support</p>
+            <p>Configurable Delete schedule Support</p>
             <p><strong>Toggle click to add event Support</strong></p>
             <p><strong>Toggle Drag and Drop Support (re-added from original)</strong></p>
             <p><strong>Toggle Resize Support (re-added from original)</strong></p>
@@ -384,27 +384,27 @@
             <table class="table table-striped">
                 <tr>
                     <th colspan="2">name</th>
-                    <th>Type</th>
+                    <th width="150px">Type</th>
                     <th>description</th>
                 </tr>
                 <tr>
                     <td colspan="2">today</td>
-                    <td>String(YYYY/MM/DD)</td>
+                    <td>String(yyyy/MM/dd)</td>
                     <td>Combined with <strong>nowTime</strong> all dates in the timeline before today@nowTime will be greyed-out (disabled) by default.</td>
                 </tr>
                 <tr>
                     <td colspan="2">nowTime</td>
-                    <td>String(HH:ii)</td>
+                    <td>String(HH:mm)</td>
                     <td>See <strong>today</strong> for reference</td>
                 </tr>
                 <tr>
                     <td colspan="2">startDate</td>
-                    <td>String(YYYY/MM/DD)</td>
+                    <td>String(yyyy/MM/dd)</td>
                     <td>First date of the schedule</td>
                 </tr>
                 <tr>
                     <td colspan="2">endDate</td>
-                    <td>String(YYYY/MM/DD)</td>
+                    <td>String(yyyy/MM/dd)</td>
                     <td>Last date of the schedule</td>
                 </tr>
                 <tr>
@@ -414,12 +414,12 @@
                 </tr>
                 <tr>
                     <td colspan="2">startTime</td>
-                    <td>String(HH:ii)</td>
+                    <td>String(HH:mm)</td>
                     <td>schedule start time</td>
                 </tr>
                 <tr>
                     <td colspan="2">endTime</td>
-                    <td>String(HH:ii)</td>
+                    <td>String(HH:mm)</td>
                     <td>schedule end time</td>
                 </tr>
                 <tr>
@@ -450,7 +450,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">debug</td>
-                    <td>String,element</td>
+                    <td>String</td>
                     <td>debug string output elements</td>
                 </tr>
                 <tr>
@@ -501,7 +501,7 @@
                 </tr>
                 <tr>
                     <td>impossibleDate</td>
-                    <td>Array(YYYY/MM/DD)</td>
+                    <td>Array(yyyy/MM/dd)</td>
                     <td>Impossible dates are greyed-out and disabled</td>
                 </tr>
                 <tr>
@@ -568,12 +568,12 @@
                 </tr>
                 <tr>
                     <td>start</td>
-                    <td>String(HH:ii)</td>
+                    <td>String(HH:mm)</td>
                     <td>Resource open time</td>
                 </tr>
                 <tr>
                     <td>end</td>
-                    <td>String(HH:ii)</td>
+                    <td>String(HH:mm)</td>
                     <td>Resource close time</td>
                 </tr>
             </table>
@@ -590,12 +590,12 @@
                 </tr>
                 <tr>
                     <td colspan="2">start</td>
-                    <td>String (YYYY/MM/DD HH:ii)</td>
+                    <td>String (yyyy/MM/dd HH:mmm)</td>
                     <td>DateTime when this event starts</td>
                 </tr>
                 <tr>
                     <td colspan="2">end</td>
-                    <td>String (YYYY/MM/DD HH:ii)</td>
+                    <td>String (yyyy/MM/dd HH:mm)</td>
                     <td>DateTime when this event ends</td>
                 </tr>
                 <tr>
@@ -604,7 +604,7 @@
                     <td>Visible Text of the Event</td>
                 </tr>
                 <tr>
-                    <td>class</td>
+                    <td colspan="2">class</td>
                     <td>String</td>
                     <td>Class to add to the event card (note this was inside <em>data</em> in the original version</td>
                 </tr>
