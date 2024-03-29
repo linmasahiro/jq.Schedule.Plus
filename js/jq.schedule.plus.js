@@ -228,7 +228,7 @@
 
                 // ブロック内容の追加
                 // EVENT CARD CONTENT DEFINITION
-                var $content = jQuery('<span class="head"><span class="startTime time"></span>～<span class="endTime time"></span></span><span class="text"></span>');
+                var $content = jQuery('<span class="head"><span class="start time"></span>～<span class="end time"></span></span><span class="text"></span>');
 
                 // SEBASIRA #8 Full opacity override
                 var fullOpacityClass = "";
@@ -242,8 +242,8 @@
                 var snum = element.getScheduleCount(data["timeline"]);
 
                 // APPLY DATA/INFO TO CONTENT
-                $bar.find(".startTime").text(stext);
-                $bar.find(".endTime").text(etext);
+                $bar.find(".start").text(stext);
+                $bar.find(".end").text(etext);
                 if (data["text"]) {
                     $bar.find(".text").text(data["text"]);
                 }
