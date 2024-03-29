@@ -1,4 +1,4 @@
-jq.Schedule.++ (v2.0)
+jq.Schedule.++ (v2.1)
 ==============
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)

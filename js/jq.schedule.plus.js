@@ -1,3 +1,12 @@
+/**
+ * v2.1 @ 29/03/2024
+ * 
+ * jq.Schedule by ateliee (https://github.com/ateliee/jquery.schedule/)
+ * jq.Schedule.Plus by linmasahiro (https://github.com/linmasahiro/jquery.schedule.plus)
+ * jq.Schedule++ by sebasira (https://github.com/sebasira/jquery.schedule.plus)
+ * 
+ */
+
 (function ($) {
     $.fn.timeSchedule = function (options) {
         // LIN 日時初期値
