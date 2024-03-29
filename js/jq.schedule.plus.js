@@ -256,10 +256,6 @@
                     height: (setting.timeLineY) - 2
                 });
 
-                if (data["class"]) {
-                    $bar.addClass(data["class"]);
-                }
-
                 // Add sc_Bar (aka EventCard) to timeline
                 $element.find('.sc_main .timeline').eq(data["timeline"]).append($bar);
 
