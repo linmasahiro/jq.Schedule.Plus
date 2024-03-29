@@ -281,7 +281,7 @@
     function applyCustomContentToCard(element, cardElement, eventData){
         var stext = element.formatTime(eventData["start"]);
         cardElement.find(".start").text(stext);
-        
+
         if (eventData["text"]) {
             cardElement.find(".text").text("Observations: " + eventData["text"]);
         }
@@ -339,6 +339,7 @@
             <p><strong>Toggle Drag and Drop Support (re-added from original)</strong></p>
             <p><strong>Toggle Resize Support (re-added from original)</strong></p>
             <p><strong>Row Subtitle (re-added from original)</strong></p>
+            <p><strong>Custom EventCard content Support</strong></p>
             <p><button onclick="javascript:location.href='https://github.com/linmasahiro/jq.Schedule.Plus';"
                     class="btn btn-large btn-primary" type="button">Download jq.Schedule.Plus</button></p>
             <p>
@@ -404,7 +405,7 @@
             <table class="table table-striped">
                 <tr>
                     <th colspan="2">name</th>
-                    <th width="150px">Type</th>
+                    <th width="350px">Type</th>
                     <th>description</th>
                 </tr>
                 <tr>
@@ -535,47 +536,63 @@
                     <td>Events to add to the row (timeline)</td>
                 </tr>
                 <tr>
+                    <td colspan="2">init_data</td>
+                    <td>function (node, data)</td>
+                    <td>Callback init event</td>
+                </tr>
+                <tr>
                     <td colspan="2">change</td>
-                    <td>function</td>
-                    <td>callback change time</td>
+                    <td>function (node, data)</td>
+                    <td>Callback change event</td>
                 </tr>
                 <tr>
                     <td colspan="2">click</td>
-                    <td>function</td>
-                    <td>callback click time</td>
+                    <td>function (node, data)</td>
+                    <td>Callback click event</td>
                 </tr>
                 <tr>
                     <td colspan="2">timeClick</td>
-                    <td>function</td>
-                    <td>callback timebar click</td>
+                    <td>function (element, data)</td>
+                    <td>Callback timebar click</td>
                 </tr>
                 <tr>
                     <td colspan="2">append</td>
-                    <td>function</td>
-                    <td>callback append time</td>
+                    <td>function (node, data)</td>
+                    <td>Callback append event</td>
                 </tr>
                 <tr>
                     <td colspan="2">dateClick</td>
-                    <td>function</td>
-                    <td>callback click date</td>
+                    <td>function (date)</td>
+                    <td>Callback click date event</td>
                 </tr>
                 <tr>
                     <td colspan="2">timeDrag</td>
-                    <td>function</td>
-                    <td>callback drag time data</td>
+                    <td>function (data)</td>
+                    <td>Callback drag event</td>
                 </tr>
                 <tr>
                     <td colspan="2">titleClick</td>
-                    <td>function</td>
-                    <td>callback click timebar line id</td>
+                    <td>function (data)</td>
+                    <td>Callback click timebar line id (maybe row id?)</td>
                 </tr>
                 <tr>
                     <td colspan="2">delete</td>
-                    <td>function</td>
-                    <td>callback delete data</td>
+                    <td>function (data)</td>
+                    <td>Callback delete event</td>
+                </tr>
+                <tr>
+                    <td colspan="2">applyCustomContent</td>
+                    <td>function (element, cardElement, eventData)</td>
+                    <td>Function to apply the custom content to the Card Elements</td>
+                </tr>
+                <tr>
+                    <td colspan="2">contentDefinition</td>
+                    <td>String</td>
+                    <td>Defines the DOM structure of the eventCard</td>
                 </tr>
             </table>
         </p>
+
 
         <h2 id="option">Business Hours</h2>
         <p>Each row <strong>must have 7 elements</strong>, one per each Day of the Week. It defines the open/close time of each one, starting from sunday. The date in the timeline would be greyed-out in the interval outside the start-end for the given DoW</p>
