@@ -175,3 +175,7 @@
 .full-opacity {
 	opacity: 1 !important;
 }
+
+.pinkDoWHeader {
+	background-color: #fe393980 !important;
+}

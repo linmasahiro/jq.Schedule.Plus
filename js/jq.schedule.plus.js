@@ -12,6 +12,7 @@
             startDate: today,
             endDate: today,
             weekday: ['日', '月', '火', '水', '木', '金', '土'], // LIN 追加機能 - DOW表示
+            dowHeaderClass: ['pinkDoWHeader', '', '', '', '', '', 'pinkDoWHeader'], // SEBASIRA #10 Custom class for each DoW header
             today: today,
             nowTime: '24:00',
             startTime: "07:00",
@@ -868,12 +869,12 @@
 
                 // LIN 日付ヘッダーの作成
                 var nowDate = new Date(daysArray[count]);
-                var $dateDiv = $('<div class="sc_date" data-date="' + daysArray[count] + '">' + daysArray[count] + '(' + setting.weekday[nowDate.getDay()] + ')</div>');
+                var dow = nowDate.getDay();
+                // SEBASIRA #10 Custom class for each DoW header
+                var dowHeaderClass = setting.dowHeaderClass[dow];
+                var $dateDiv = $('<div class="sc_date ' + dowHeaderClass +'" data-date="' + daysArray[count] + '">' + daysArray[count] + '(' + setting.weekday[nowDate.getDay()] + ')</div>');
                 var $timeDiv = $('<div class="sc_header_time"></div>');
                 var allWidth = 0;
-                if (nowDate.getDay() === 0 || nowDate.getDay() == 6) {
-                    $dateDiv.css('background', '#fe393980');
-                }
                 if (setting.dateClick) {
                     $dateDiv.css('cursor', 'pointer');
                     $dateDiv.click(function () {
