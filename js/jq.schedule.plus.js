@@ -227,6 +227,7 @@
                 }
 
                 // ブロック内容の追加
+                // EVENT CARD CONTENT DEFINITION
                 var $content = jQuery('<span class="head"><span class="startTime time"></span>～<span class="endTime time"></span></span><span class="text"></span>');
 
                 // SEBASIRA #8 Full opacity override
@@ -239,21 +240,30 @@
                 var stext = startDate + ' ' + element.formatTime(data["start"]);
                 var etext = endDate + ' ' + element.formatTime(data["end"]);
                 var snum = element.getScheduleCount(data["timeline"]);
+
+                // APPLY DATA/INFO TO CONTENT
+                $bar.find(".startTime").text(stext);
+                $bar.find(".endTime").text(etext);
+                if (data["text"]) {
+                    $bar.find(".text").text(data["text"]);
+                }
+
+                // EVENT CARD CONFIGURATION
                 $bar.css({
                     left: (st * setting.widthTimeX),
                     top: ((snum * setting.timeLineY) + setting.timeLinePaddingTop),
                     width: ((et - st) * setting.widthTimeX),
                     height: (setting.timeLineY) - 2
                 });
-                $bar.find(".startTime").text(stext);
-                $bar.find(".endTime").text(etext);
-                if (data["text"]) {
-                    $bar.find(".text").text(data["text"]);
-                }
+
                 if (data["class"]) {
                     $bar.addClass(data["class"]);
                 }
+
+                // Add sc_Bar (aka EventCard) to timeline
                 $element.find('.sc_main .timeline').eq(data["timeline"]).append($bar);
+
+
                 // LIN データの追加
                 scheduleData.push(data);
                 // key
