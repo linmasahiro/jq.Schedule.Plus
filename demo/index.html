@@ -78,6 +78,15 @@
                     },
                     {
                         text: 'Mr.B reserved',
+                        class: 'green',
+                        start: '2019/05/18 12:00',
+                        end: '2019/05/18 14:00',
+                        data: {
+                            something: 'something'
+                        }
+                    },
+                    {
+                        text: 'Mr.B reserved',
                         class: '',
                         start: '2019/05/19 06:00',
                         end: '2019/05/22 12:00',
@@ -231,6 +240,7 @@
                 debug: "",
                 multiple: multiple, // LIN 追加機能-複数選択機能有無
                 rows: sampleRows,
+                fullOpacity: true,
                 init_data: function (node, data) {
                     $("#logs").append($("<div>").text("init event:" + JSON.stringify(data)));
                 },
@@ -395,12 +405,12 @@
                         href="https://github.com/sebasira/jquery.schedule.plus/archive/refs/tags/v2.1.zip">jQuery.Schedule.Plus v2.1</a></p>
             </li>
             <li>
-                <p>include <code>jquery.js</code>and<code>jquery.ui.js</code> after <code>jq.schedule.plus</code></p>
+                <p>include <code>jquery.js</code>and<code>jquery.ui.js</code> before <code>jq.schedule.plus</code></p>
                 <pre><code>&lt;script src=&quot;jquery-1.10.2.js&quot; type=&quot;text/javascript&quot; language=&quot;javascript&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;jquery-ui-1.10.4.js&quot; type=&quot;text/javascript&quot; language=&quot;javascript&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;../js/jq.schedule.plus.js&quot;&gt;&lt;/script&gt;
 &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../css/style.css&quot; /&gt;
-&lt;!-- If using Bootsrap (v3) and has issues with the appearean ce, please also include this --&gt
+&lt;!-- If using Bootsrap (v3) and has issues with the appeareance, please also include this --&gt
 &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../css/fix-bootstrap.css&quot; /&gt;</code></pre>
             </li>
             <li>
@@ -443,8 +453,13 @@
                 </tr>
                 <tr>
                     <td colspan="2">weekday</td>
-                    <td>Array</td>
+                    <td>Array(String)</td>
                     <td>Defines the name to be shown on hedaer bar for each DoW starting from sunday</td>
+                </tr>
+                <tr>
+                    <td colspan="2">dowHeaderClass</td>
+                    <td>Array(String)</td>
+                    <td>Defines a class to add the the Date Header for each DoW starting from sunday</td>
                 </tr>
                 <tr>
                     <td colspan="2">startTime</td>
@@ -457,9 +472,14 @@
                     <td>schedule end time</td>
                 </tr>
                 <tr>
-                    <td colspan="2">widthTime</td>
+                    <td colspan="2">widthTimeX</td>
                     <td>Integer</td>
                     <td>minuite time line cell</td>
+                </tr>
+                <tr>
+                    <td colspan="2">spacingX</td>
+                    <td>Integer</td>
+                    <td>[px] Spacing between cards in the X axis. By default it's one pixel</td>
                 </tr>
                 <tr>
                     <td colspan="2">timeLineY</td>

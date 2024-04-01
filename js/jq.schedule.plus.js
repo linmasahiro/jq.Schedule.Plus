@@ -27,6 +27,7 @@
             startTime: "07:00",
             endTime: "19:30",
             widthTimeX: 25, // 1cell辺りの幅(px)
+            spacingX: 1,    // [px] Spacing between cards in the X axis
             widthTime: 600, // 区切り時間(秒)
             timeLineY: 50, // timeline height(px)
             timeLineBorder: 1, // timeline height border
@@ -269,8 +270,10 @@
                 $bar.css({
                     left: (st * setting.widthTimeX),
                     top: ((snum * setting.timeLineY) + setting.timeLinePaddingTop),
-                    width: ((et - st) * setting.widthTimeX),
-                    height: (setting.timeLineY) - 2
+                    width: ((et - st) * setting.widthTimeX) - setting.spacingX,    // SEBASIRA #13 Space between cards
+                    height: (setting.timeLineY) - 2,
+                    // SEBASIRA #13 Space between cards
+                    "margin-left": setting.spacingX
                 });
 
                 // Add sc_Bar (aka EventCard) to timeline
