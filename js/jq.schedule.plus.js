@@ -475,7 +475,7 @@
             var html;
 
             var $data = jQuery('<div class="timeline">');
-            var $title_span = jQuery('<span class="timeline-title title_' + lineId + '" data-id="' + lineId + '">' + title + '</span>').appendTo($data);
+            var $title_span = jQuery('<div class="timeline-title title_' + lineId + '" data-id="' + lineId + '">' + title + '</div>').appendTo($data);
             if (setting.titleClick) {
                 $title_span.css('cursor', 'pointer');
                 $title_span.click(function () {
