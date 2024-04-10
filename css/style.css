@@ -113,16 +113,6 @@
 .jq-schedule-plus .sc_data .timeline div.timeline-title {
 	padding-top:10px;
 }
-.jq-schedule-plus .sc_data .timeline div.timeline-subtitle {
-	font-size: 0.8em;
-	color: #cccccc;
-}
-.jq-schedule-plus .sc_data .timeline div.photo{
-	float:left;
-	width:36px;
-	height:36px;
-	padding:10px 0 10px 10px;
-}
 .jq-schedule-plus .sc_data .timeline div.title{
 	float:left;
 	padding:10px 0 10px 10px;

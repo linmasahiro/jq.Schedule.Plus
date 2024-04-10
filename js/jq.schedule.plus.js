@@ -55,9 +55,12 @@
             timeClick: null,
             timeDrag: null,
             delete: null,
-            // custom content
+            // custom content for Event
             applyCustomContent: null, // SEBASIRA #11 Defines a function to be called to display the cont
-            contentDefinition: "<span class='head'><span class='start time'></span>～<span class='end time'></span></span><span class='text'></span><span></span>'" // SEBASIRA #11 Allows to define a custom content strucutre, using the current one as default
+            contentDefinition: "<span class='head'><span class='start time'></span>～<span class='end time'></span></span><span class='text'></span><span></span>'", // SEBASIRA #11 Allows to define a custom content strucutre, using the current one as default
+            // custom content for Row/Timeline Title
+            applyCustomContentTitle: null, // SEBASIRA #14 Defines a function to be called to display the cont on the Row/Timeline Title
+            contentDefinitionTitle: "<span class='title-class'></span>", // SEBASIRA #14 Allows to define a custom content strucutre for the Row/Timeline title, using the current one as default
         };
 
         this.calcStringTime = function (string) {
@@ -469,26 +472,30 @@
             // LIN ラインID
             var lineId = maxRow;
 
-            var title = this.unescapeHtml(row["title"]);
             var id = $element.find('.sc_main .timeline').length;
 
             var html;
 
             var $data = jQuery('<div class="timeline">');
-            var $title_span = jQuery('<div class="timeline-title title_' + lineId + '" data-id="' + lineId + '">' + title + '</div>').appendTo($data);
+            // SEBASIRA #14 - Custom Row/Timeline Title content
+            var $title_div = jQuery('<div class="timeline-title timeline-custom-container title_' + lineId + '" data-id="' + lineId + '">' + setting.contentDefinitionTitle + '</div>');
+            $data.append($title_div);
             if (setting.titleClick) {
-                $title_span.css('cursor', 'pointer');
-                $title_span.click(function () {
+                $title_div.css('cursor', 'pointer');
+                $title_div.click(function () {
                     setting.titleClick({
                         timeline: $(this).data('id')
                     });
                 });
             }
 
-            // SEBASIRA #5 - Subtitle
-            if (row.subtitle) {
-                var subtitle = this.unescapeHtml(row["subtitle"]);
-                $data.append('<span class="timeline-subtitle">' + row.subtitle + '</span>');
+            // SEBASIRA #14 - Default content has a class 'title-class' to set the row/timeline title
+            var title = this.unescapeHtml(row["title"]);
+            $data.find(".title-class").text(title);
+
+            // SEBASIRA #14 Apply custom content to the row/timeline title. This will call a method to apply custom content values
+            if (setting.applyCustomContentTitle) {
+                setting.applyCustomContentTitle($data, row);
             }
 
             // event call
