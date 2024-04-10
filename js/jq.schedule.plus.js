@@ -1,5 +1,5 @@
 /**
- * v2.2 @ 01/04/2024
+ * v2.3 @ 10/04/2024
  * 
  * jq.Schedule by ateliee (https://github.com/ateliee/jquery.schedule/)
  * jq.Schedule.Plus by linmasahiro (https://github.com/linmasahiro/jquery.schedule.plus)
