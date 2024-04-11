@@ -1,3 +1,12 @@
+/**
+ * v2.3 @ 10/04/2024
+ * 
+ * jq.Schedule by ateliee (https://github.com/ateliee/jquery.schedule/)
+ * jq.Schedule.Plus by linmasahiro (https://github.com/linmasahiro/jquery.schedule.plus)
+ * jq.Schedule++ by sebasira (https://github.com/sebasira/jquery.schedule.plus)
+ * 
+ */
+
 (function ($) {
     $.fn.timeSchedule = function (options) {
         // LIN 日時初期値
@@ -12,11 +21,13 @@
             startDate: today,
             endDate: today,
             weekday: ['日', '月', '火', '水', '木', '金', '土'], // LIN 追加機能 - DOW表示
+            dowHeaderClass: ['pinkDoWHeader', '', '', '', '', '', 'pinkDoWHeader'], // SEBASIRA #10 Custom class for each DoW header
             today: today,
             nowTime: '24:00',
             startTime: "07:00",
             endTime: "19:30",
             widthTimeX: 25, // 1cell辺りの幅(px)
+            spacingX: 1,    // [px] Spacing between cards in the X axis
             widthTime: 600, // 区切り時間(秒)
             timeLineY: 50, // timeline height(px)
             timeLineBorder: 1, // timeline height border
@@ -26,8 +37,15 @@
             headTimeBorder: 1, // time border width
             dataWidth: 160, // data width
             verticalScrollbar: 0, // vertical scrollbar width
-            multiple: false, // LIN 追加機能-複数選択機能有無
-            // event
+            multiple: false, // LIN 追加機能-複数選択機能有無 If true I can add more than one event by clicking
+            clickToAdd: true, // SEBASIRA #2 This enables/disables the click on timeline to add new item
+            draggable: false, // SEBASIRA #3 Toggle draggable
+            resizable: false, // SEBASIRA #7 Toggle resizable
+            fullOpacity: false, // SEBASIRA #8 Override EventCard opacity
+            allowDelete: true, // SEBASIRA #9 Toggle delettability
+            nextNo: 1, // LIN 追加機能 - 複数選択初期番号
+            debug: "", // debug selecter
+            // event handlers
             initData: null,
             change: null,
             dateClick: null,
@@ -37,8 +55,12 @@
             timeClick: null,
             timeDrag: null,
             delete: null,
-            nextNo: 1, // LIN 追加機能 - 複数選択初期番号
-            debug: "" // debug selecter
+            // custom content for Event
+            applyCustomContent: null, // SEBASIRA #11 Defines a function to be called to display the cont
+            contentDefinition: "<span class='head'><span class='start time'></span>～<span class='end time'></span></span><span class='text'></span><span></span>'", // SEBASIRA #11 Allows to define a custom content strucutre, using the current one as default
+            // custom content for Row/Timeline Title
+            applyCustomContentTitle: null, // SEBASIRA #14 Defines a function to be called to display the cont on the Row/Timeline Title
+            contentDefinitionTitle: "<span class='title-class'></span>", // SEBASIRA #14 Allows to define a custom content strucutre for the Row/Timeline title, using the current one as default
         };
 
         this.calcStringTime = function (string) {
@@ -193,49 +215,74 @@
                 var et = Math.ceil((data["end"] - tableStartTime) / setting.widthTime) + endMultiples;
 
                 // 削除ボタンの追加
-                var $deleteBtn = jQuery('<span style="float: right; padding: 5px">✖</span>');
-                $deleteBtn.click(function () {
-                    // LIN 削除した列の高さを調整する
-                    var sc_key = $bar.data("sc_key");
-                    var deleteTimelineNum = scheduleData[sc_key].timeline;
-                    var tempDeleteData = scheduleData[sc_key];
-                    $bar.remove();
-                    element.resetBarPosition(deleteTimelineNum);
+                // SEBASIRA #9 Toggle Deeletable
+                var $deleteBtn = "";
+                if (setting.allowDelete){
+                    $deleteBtn = jQuery('<span style="float: right; padding: 5px; cursor: pointer">✖</span>');
+            
+                    $deleteBtn.click(function () {
+                        // LIN 削除した列の高さを調整する
+                        var sc_key = $bar.data("sc_key");
+                        var deleteTimelineNum = scheduleData[sc_key].timeline;
+                        var tempDeleteData = scheduleData[sc_key];
+                        $bar.remove();
+                        element.resetBarPosition(deleteTimelineNum);
 
-                    // LIN 追加したエレメントの削除は追加番号を削除する
-                    if (tempDeleteData['data']['No'] !== undefined) {
-                        var key = jQuery.inArray(tempDeleteData['data']['No'], liveDataNo);
-                        liveDataNo.splice(key, 1);
-                    }
-
-                    if (setting.delete) {
-                        if (jQuery(this).data("dragCheck") !== true && jQuery(this).data("resizeCheck") !== true) {
-                            setting.delete(tempDeleteData);
+                        // LIN 追加したエレメントの削除は追加番号を削除する
+                        if (tempDeleteData['data']['No'] !== undefined) {
+                            var key = jQuery.inArray(tempDeleteData['data']['No'], liveDataNo);
+                            liveDataNo.splice(key, 1);
                         }
-                    }
-                });
+
+                        if (setting.delete) {
+                            if (jQuery(this).data("dragCheck") !== true && jQuery(this).data("resizeCheck") !== true) {
+                                setting.delete(tempDeleteData);
+                            }
+                        }
+                    });
+                }
 
                 // ブロック内容の追加
-                var $content = jQuery('<span class="head"><span class="startTime time"></span>～<span class="endTime time"></span></span><span class="text"></span>');
-                var $bar = jQuery('<div class="sc_Bar ' + data['class'] + '"></div>').append($deleteBtn).append($content);
+                // EVENT CARD CONTENT DEFINITION
+                var $content = jQuery(setting.contentDefinition);
+
+                // SEBASIRA #8 Full opacity override
+                var fullOpacityClass = "";
+                if (setting.fullOpacity){
+                    fullOpacityClass = "full-opacity";
+                }
+
+                var $bar = jQuery('<div class="sc_Bar ' + data['class'] + ' ' + fullOpacityClass +'"></div>').append($deleteBtn).append($content);
+
+                // APPLY DATA/INFO TO CONTENT
                 var stext = startDate + ' ' + element.formatTime(data["start"]);
                 var etext = endDate + ' ' + element.formatTime(data["end"]);
                 var snum = element.getScheduleCount(data["timeline"]);
-                $bar.css({
-                    left: (st * setting.widthTimeX),
-                    top: ((snum * setting.timeLineY) + setting.timeLinePaddingTop),
-                    width: ((et - st) * setting.widthTimeX),
-                    height: (setting.timeLineY) - 2
-                });
-                $bar.find(".startTime").text(stext);
-                $bar.find(".endTime").text(etext);
+                $bar.find(".start").text(stext);
+                $bar.find(".end").text(etext);
                 if (data["text"]) {
                     $bar.find(".text").text(data["text"]);
                 }
-                if (data["class"]) {
-                    $bar.addClass(data["class"]);
+
+                // SEBASIRA #11 Apply custom content. This will call a method to apply custom content values
+                if (setting.applyCustomContent) {
+                    setting.applyCustomContent(element, $bar, data);
                 }
+
+                // EVENT CARD CONFIGURATION
+                $bar.css({
+                    left: (st * setting.widthTimeX),
+                    top: ((snum * setting.timeLineY) + setting.timeLinePaddingTop),
+                    width: ((et - st) * setting.widthTimeX) - setting.spacingX,    // SEBASIRA #13 Space between cards
+                    height: (setting.timeLineY) - 2,
+                    // SEBASIRA #13 Space between cards
+                    "margin-left": setting.spacingX
+                });
+
+                // Add sc_Bar (aka EventCard) to timeline
                 $element.find('.sc_main .timeline').eq(data["timeline"]).append($bar);
+
+
                 // LIN データの追加
                 scheduleData.push(data);
                 // key
@@ -388,6 +435,16 @@
                     }
                 });
 
+                // SEBASIRA #3 Toggle draggable
+                if (setting.draggable === false) {
+                    $bar.draggable('disable');
+                }
+
+                // SEBASIRA #7 Toggle resizable
+                if (setting.resizable === false) {
+                    $bar.resizable('disable');
+                }
+
                 return key;
             }
         };
@@ -415,20 +472,30 @@
             // LIN ラインID
             var lineId = maxRow;
 
-            var title = this.unescapeHtml(row["title"]);
             var id = $element.find('.sc_main .timeline').length;
 
             var html;
 
             var $data = jQuery('<div class="timeline">');
-            var $title_span = jQuery('<span class="title_' + lineId + '" data-id="' + lineId + '">' + title + '</span>').appendTo($data);
+            // SEBASIRA #14 - Custom Row/Timeline Title content
+            var $title_div = jQuery('<div class="timeline-title timeline-custom-container title_' + lineId + '" data-id="' + lineId + '">' + setting.contentDefinitionTitle + '</div>');
+            $data.append($title_div);
             if (setting.titleClick) {
-                $title_span.css('cursor', 'pointer');
-                $title_span.click(function () {
+                $title_div.css('cursor', 'pointer');
+                $title_div.click(function () {
                     setting.titleClick({
                         timeline: $(this).data('id')
                     });
                 });
+            }
+
+            // SEBASIRA #14 - Default content has a class 'title-class' to set the row/timeline title
+            var title = this.unescapeHtml(row["title"]);
+            $data.find(".title-class").text(title);
+
+            // SEBASIRA #14 Apply custom content to the row/timeline title. This will call a method to apply custom content values
+            if (setting.applyCustomContentTitle) {
+                setting.applyCustomContentTitle($data, row);
             }
 
             // event call
@@ -442,7 +509,7 @@
             var $timeline = jQuery(html);
             var impossibleDate = (row["impossibleDate"] !== undefined && row["impossibleDate"] !== null) ? row["impossibleDate"] : [];
             for (var count = 0; count < diffDays; count++) {
-                var dayOfWeek = (count == 6) ? 0 : (count + 1);
+                var dayOfWeek = new Date(daysArray[count]).getDay(); // SEBASIRA #4 get the DoW of each date being displayed
                 var businessStartTime = element.calcStringTime(row["businessHours"][dayOfWeek]['start']);
                 var businessEndTime = element.calcStringTime(row["businessHours"][dayOfWeek]['end']);
                 for (var t = tableStartTime; t < tableEndTime; t += setting.widthTime) {
@@ -485,26 +552,29 @@
                 var $startElement;
                 var $endElement;
                 $timeline.find(".tl").bind("mousedown", function (event) {
-                    if (!setting.multiple && liveDataNo.length > 0) {
-                        console.log('not support multiple!');
-                        return false;
-                    }
-                    $startElement = jQuery(this);
-                    if ($startElement.hasClass('can_res')) {
-                        $endElement = undefined;
-                        if (!$startElement.hasClass('selected_time')) {
-                            $startElement.toggleClass('time_first', true);
-                            $startElement.toggleClass('selected_no_' + addNo, true);
-                            lineId = $startElement.data('lineId');
-                            startX = event.pageX;
-                            if (!setting.multiple) {
-                                jQuery('.selected_time').toggleClass('selected_time', false);
-                            }
-                            isMouseDown = true;
-                            $startElement.toggleClass("selected_time", true);
-                            if (setting.multiple) {
-                                $startElement.html('');
-                                $startElement.append($('<div>' + addNo + '</div>'));
+                    // SEBASIRA #2 Toggle clickToAdd
+                    if (setting.clickToAdd){
+                        if (!setting.multiple && liveDataNo.length > 0) {
+                            console.log('not support multiple!');
+                            return false;
+                        }
+                        $startElement = jQuery(this);
+                        if ($startElement.hasClass('can_res')) {
+                            $endElement = undefined;
+                            if (!$startElement.hasClass('selected_time')) {
+                                $startElement.toggleClass('time_first', true);
+                                $startElement.toggleClass('selected_no_' + addNo, true);
+                                lineId = $startElement.data('lineId');
+                                startX = event.pageX;
+                                if (!setting.multiple) {
+                                    jQuery('.selected_time').toggleClass('selected_time', false);
+                                }
+                                isMouseDown = true;
+                                $startElement.toggleClass("selected_time", true);
+                                if (setting.multiple) {
+                                    $startElement.html('');
+                                    $startElement.append($('<div>' + addNo + '</div>'));
+                                }
                             }
                         }
                     }
@@ -832,12 +902,12 @@
 
                 // LIN 日付ヘッダーの作成
                 var nowDate = new Date(daysArray[count]);
-                var $dateDiv = $('<div class="sc_date" data-date="' + daysArray[count] + '">' + daysArray[count] + '(' + setting.weekday[nowDate.getDay()] + ')</div>');
+                var dow = nowDate.getDay();
+                // SEBASIRA #10 Custom class for each DoW header
+                var dowHeaderClass = setting.dowHeaderClass[dow];
+                var $dateDiv = $('<div class="sc_date ' + dowHeaderClass +'" data-date="' + daysArray[count] + '">' + daysArray[count] + '(' + setting.weekday[nowDate.getDay()] + ')</div>');
                 var $timeDiv = $('<div class="sc_header_time"></div>');
                 var allWidth = 0;
-                if (nowDate.getDay() === 0 || nowDate.getDay() == 6) {
-                    $dateDiv.css('background', '#fe393980');
-                }
                 if (setting.dateClick) {
                     $dateDiv.css('cursor', 'pointer');
                     $dateDiv.click(function () {

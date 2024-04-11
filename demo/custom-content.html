@@ -23,11 +23,34 @@
             /* 60px to make the container go all the way to the bottom of the topbar */
         }
     </style>
+
+    <style>
+        /* SEBASIRA 14 Custom Timeline Title */
+        .timeline-custom-container {
+            display: flex !important;
+            align-items: center;
+            height: 100%;
+        }
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .name {
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <script type="text/javascript">
     jQuery(document).ready(function () {
         var sampleRows = [{
-                title: 'Room１',
+                title: 'Jimmy Neutron',
+                data: {
+                    image: 'jimmy.jpg'
+                },  
                 impossibleDate: [
                     '2019/05/17'
                 ],
@@ -97,7 +120,10 @@
                 ]
             },
             {
-                title: 'Room２',
+                title: 'Dexter',
+                data: {
+                    image: 'dexter.jpg'
+                },  
                 impossibleDate: [],
                 businessHours: [{
                         dow: ['0'],
@@ -146,7 +172,10 @@
                 }]
             },
             {
-                title: 'Room３',
+                title: 'Johnny Bravo',
+                data: {
+                    image: 'johnny.jpg'
+                },  
                 impossibleDate: [],
                 businessHours: [{
                         dow: ['0'],
@@ -241,6 +270,7 @@
                 multiple: multiple, // LIN 追加機能-複数選択機能有無
                 rows: sampleRows,
                 fullOpacity: true,
+                contentDefinitionTitle: "<img class='profile-pic'><div class='title-class'></div>",
                 init_data: function (node, data) {
                     $("#logs").append($("<div>").text("init event:" + JSON.stringify(data)));
                 },
@@ -276,14 +306,18 @@
                 applyCustomContent: function (element, cardElement, eventData) {
                     // SEBASIRA #11 Custom Content
                     applyCustomContentToCard(element, cardElement, eventData);
+                },
+                applyCustomContentTitle: function (rowElement, rowData) {
+                    // SEBASIRA #14 Custom Content
+                    applyCustomContentToTitle(rowElement, rowData);
                 }
             });
         }
     })
 
 
-    /* APPLY CUSTOM CONTENT */
-    /* ******************** */
+    /* APPLY CUSTOM CONTENT - TO CARD */
+    /* ****************************** */
     /**
      * Example custom content definition that sets the START to be just the time, and leave the END as default (full DateTime).
      * Also changes the text to pre-append 'Observations: ' to it, just ot showcase how content will be customized
@@ -295,6 +329,15 @@
         if (eventData["text"]) {
             cardElement.find(".text").text("Observations: " + eventData["text"]);
         }
+    }
+
+
+    /* APPLY CUSTOM CONTENT - TO TITLE */
+    /* ******************************* */
+    function applyCustomContentToTitle(rowElement, rowData){
+        console.log(rowData);
+        var imageURL = rowData["data"].image;
+        rowElement.find(".profile-pic").attr("src", imageURL);
     }
 </script>
 
@@ -368,7 +411,7 @@
             </p>
             
         </div>
-        <h2 id="demo">Demo</h2>
+        <h2 id="demo">Custom Row/Timeline Title Demo</h2>
         <p>
             Example Sample Demo
         </p>
@@ -427,209 +470,216 @@
         <p>
             <table class="table table-striped">
                 <tr>
-                    <th colspan="2">name</th>
+                    <th colspan="3">name</th>
                     <th width="350px">Type</th>
                     <th>description</th>
                 </tr>
                 <tr>
-                    <td colspan="2">today</td>
+                    <td colspan="3">today</td>
                     <td>String(yyyy/MM/dd)</td>
                     <td>Combined with <strong>nowTime</strong> all dates in the timeline before today@nowTime will be greyed-out (disabled) by default.</td>
                 </tr>
                 <tr>
-                    <td colspan="2">nowTime</td>
+                    <td colspan="3">nowTime</td>
                     <td>String(HH:mm)</td>
                     <td>See <strong>today</strong> for reference</td>
                 </tr>
                 <tr>
-                    <td colspan="2">startDate</td>
+                    <td colspan="3">startDate</td>
                     <td>String(yyyy/MM/dd)</td>
                     <td>First date of the schedule</td>
                 </tr>
                 <tr>
-                    <td colspan="2">endDate</td>
+                    <td colspan="3">endDate</td>
                     <td>String(yyyy/MM/dd)</td>
                     <td>Last date of the schedule</td>
                 </tr>
                 <tr>
-                    <td colspan="2">weekday</td>
+                    <td colspan="3">weekday</td>
                     <td>Array(String)</td>
                     <td>Defines the name to be shown on hedaer bar for each DoW starting from sunday</td>
                 </tr>
                 <tr>
-                    <td colspan="2">dowHeaderClass</td>
+                    <td colspan="3">dowHeaderClass</td>
                     <td>Array(String)</td>
                     <td>Defines a class to add the the Date Header for each DoW starting from sunday</td>
                 </tr>
                 <tr>
-                    <td colspan="2">startTime</td>
+                    <td colspan="3">startTime</td>
                     <td>String(HH:mm)</td>
                     <td>schedule start time</td>
                 </tr>
                 <tr>
-                    <td colspan="2">endTime</td>
+                    <td colspan="3">endTime</td>
                     <td>String(HH:mm)</td>
                     <td>schedule end time</td>
                 </tr>
                 <tr>
-                    <td colspan="2">widthTimeX</td>
+                    <td colspan="3">widthTimeX</td>
                     <td>Integer</td>
                     <td>minuite time line cell</td>
                 </tr>
                 <tr>
-                    <td colspan="2">spacingX</td>
+                    <td colspan="3">spacingX</td>
                     <td>Integer</td>
                     <td>[px] Spacing between cards in the X axis. By default it's one pixel</td>
                 </tr>
                 <tr>
-                    <td colspan="2">timeLineY</td>
+                    <td colspan="3">timeLineY</td>
                     <td>Integer</td>
                     <td>cell height px</td>
                 </tr>
                 <tr>
-                    <td colspan="2">verticalScrollbar</td>
+                    <td colspan="3">verticalScrollbar</td>
                     <td>Integer</td>
                     <td>scrollbar (px)</td>
                 </tr>
                 <tr>
-                    <td colspan="2">timeLineBorder</td>
+                    <td colspan="3">timeLineBorder</td>
                     <td>Integer</td>
                     <td>border(top and bottom)</td>
                 </tr>
                 <tr>
-                    <td colspan="2">bundleMoveWidth</td>
+                    <td colspan="3">bundleMoveWidth</td>
                     <td>Integer</td>
                     <td>width to move all schedules to the right of the clicked time line cell.
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">debug</td>
+                    <td colspan="3">debug</td>
                     <td>String</td>
                     <td>debug string output elements</td>
                 </tr>
                 <tr>
-                    <td colspan="2">multiple</td>
+                    <td colspan="3">multiple</td>
                     <td>Boolean</td>
                     <td>Allows the user to add more than one event by clicking on the timeline</td>
                 </tr>
                 <tr>
-                    <td colspan="2">clickToAdd</td>
+                    <td colspan="3">clickToAdd</td>
                     <td>Boolean</td>
                     <td>Allows the user to add events by clicking on the timeline</td>
                 </tr>
                 <tr>
-                    <td colspan="2">draggable</td>
+                    <td colspan="3">draggable</td>
                     <td>Boolean</td>
                     <td>Allows drag/drop events in the timeline</td>
                 </tr>
                 <tr>
-                    <td colspan="2">resizable</td>
+                    <td colspan="3">resizable</td>
                     <td>Boolean</td>
                     <td>Allows to resize an event in the timeline</td>
                 </tr>
                 <tr>
-                    <td colspan="2">fullOpacity</td>
+                    <td colspan="3">fullOpacity</td>
                     <td>Boolean</td>
                     <td>Overrides the opacity of all event's Card so they are fully opaque. Else, when setting them to not-draggable/not-resizable opacity is dimmed</td>
                 </tr>
                 <tr>
-                    <td colspan="2">allowDelete</td>
+                    <td colspan="3">allowDelete</td>
                     <td>Boolean</td>
                     <td>Defines if event Cards in the timeline can be deletted</td>
                 </tr>
                 <tr>
-                    <td rowspan="6">rows</td>
+                    <td rowspan="7">rows</td>
+                    <td></td>
                     <td></td>
                     <td>Array</td>
                     <td>Row Data. Each row is a timeline with a given resource name (title)</td>
                 </tr>
                 <tr>
-                    <td>title</td>
+                    <td colspan="2">title</td>
                     <td>String</td>
                     <td>Title of the resource in the timeline</td>
                 </tr>
                 <tr>
-                    <td>data</td>
+                    <td rowspan="2">data</td>
+                    <td></td>
                     <td>Object</td>
-                    <td>Custom optional object</td>
+                    <td>Custom optional object, in this case use to customize the row/timeline title</td>
                 </tr>
                 <tr>
-                    <td>impossibleDate</td>
+                    <td>image</td>
+                    <td>String</td>
+                    <td>URL of the profile picture</td>
+                </tr>
+                <tr>
+                    <td colspan="2">impossibleDate</td>
                     <td>Array(yyyy/MM/dd)</td>
                     <td>Impossible dates are greyed-out and disabled</td>
                 </tr>
                 <tr>
-                    <td>businessHours</td>
+                    <td colspan="2">businessHours</td>
                     <td>Array</td>
                     <td>Must have 7 elements, one per each DoW. It defines the open/close time of each, starting from sunday</td>
                 </tr>
                 <tr>
-                    <td>schedule</td>
+                    <td colspan="2">schedule</td>
                     <td>Array</td>
                     <td>Events to add to the row (timeline)</td>
                 </tr>
                 <tr>
-                    <td colspan="2">init_data</td>
+                    <td colspan="3">init_data</td>
                     <td>function (node, data)</td>
                     <td>Callback init event</td>
                 </tr>
                 <tr>
-                    <td colspan="2">change</td>
+                    <td colspan="3">change</td>
                     <td>function (node, data)</td>
                     <td>Callback change event</td>
                 </tr>
                 <tr>
-                    <td colspan="2">click</td>
+                    <td colspan="3">click</td>
                     <td>function (node, data)</td>
                     <td>Callback click event</td>
                 </tr>
                 <tr>
-                    <td colspan="2">timeClick</td>
+                    <td colspan="3">timeClick</td>
                     <td>function (element, data)</td>
                     <td>Callback timebar click</td>
                 </tr>
                 <tr>
-                    <td colspan="2">append</td>
+                    <td colspan="3">append</td>
                     <td>function (node, data)</td>
                     <td>Callback append event</td>
                 </tr>
                 <tr>
-                    <td colspan="2">dateClick</td>
+                    <td colspan="3">dateClick</td>
                     <td>function (date)</td>
                     <td>Callback click date event</td>
                 </tr>
                 <tr>
-                    <td colspan="2">timeDrag</td>
+                    <td colspan="3">timeDrag</td>
                     <td>function (data)</td>
                     <td>Callback drag event</td>
                 </tr>
                 <tr>
-                    <td colspan="2">titleClick</td>
+                    <td colspan="3">titleClick</td>
                     <td>function (data)</td>
                     <td>Callback click timebar line id (maybe row id?)</td>
                 </tr>
                 <tr>
-                    <td colspan="2">delete</td>
+                    <td colspan="3">delete</td>
                     <td>function (data)</td>
                     <td>Callback delete event</td>
                 </tr>
                 <tr>
-                    <td colspan="2">applyCustomContent</td>
+                    <td colspan="3">applyCustomContent</td>
                     <td>function (element, cardElement, eventData)</td>
                     <td>Function to apply the custom content to the Card Elements</td>
                 </tr>
                 <tr>
-                    <td colspan="2">contentDefinition</td>
+                    <td colspan="3">contentDefinition</td>
                     <td>String</td>
                     <td>Defines the DOM structure of the eventCard</td>
                 </tr>
                 <tr>
-                    <td colspan="2">applyCustomContentTitle</td>
+                    <td colspan="3">applyCustomContentTitle</td>
                     <td>function (rowElement, rowData)</td>
                     <td>Function to apply the custom content to the Row/Timeline Title Elements</td>
                 </tr>
                 <tr>
-                    <td colspan="2">contentDefinitionTitle</td>
+                    <td colspan="3">contentDefinitionTitle</td>
                     <td>String</td>
                     <td>Defines the DOM structure of the Row/Timeline Title</td>
                 </tr>

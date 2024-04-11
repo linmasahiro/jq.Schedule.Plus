@@ -1,0 +1,40 @@
+/* Remove box-sizing applied from Bootstrap */
+.sc_header_cell,
+.sc_header_cell::before,
+.sc_header_cell::after{
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    box-sizing: content-box !important;
+}
+
+.sc_time,
+.sc_time::before,
+.sc_time::after{
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    box-sizing: content-box !important;
+}
+
+.sc_Bar *,
+.sc_Bar *::before,
+.sc_Bar *::after{
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    box-sizing: content-box !important;
+}
+
+.sc_main_box *,
+.sc_main_box *::before,
+.sc_main_box *::after{
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    box-sizing: content-box !important;
+}
+
+.sc_date,
+.sc_date::before,
+.sc_date::after{
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    box-sizing: content-box !important;
+}

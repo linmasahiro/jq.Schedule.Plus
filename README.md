@@ -1,15 +1,13 @@
-jq.Schedule.Plus
-===============
+jq.Schedule.++ (v2.1)
+==============
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
 ![](https://raw.githubusercontent.com/linmasahiro/jquery.schedule.plus/master/demo/images.png)
 
-jquery and html schedule calendar base on jq.Schedule!
+jQuery Resource schedule based on [jq.Schedule](https://github.com/ateliee/jquery.schedule/) and [jq.Schedule.Plus](https://github.com/linmasahiro/jquery.schedule.plus)
 
-if you interested in it, you can reference orginal [jq.Schedule page](https://github.com/ateliee/jquery.schedule/)!
-
-javascript base time schedule plugin.
+JavaScript/jQuery Time schedule plugin.
 
 
-[Try Demo](https://linmasahiro.github.io/jquery.schedule.plus/demo/)
+[Try Demo](https://sebasira.github.io/jquery.schedule.plus/demo/)
